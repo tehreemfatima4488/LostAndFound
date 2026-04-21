@@ -14,6 +14,6 @@ const itemSchema = new mongoose.Schema({
     imageUrl: String,
     status: { type: String, enum: ['active', 'recovered'], default: 'active' },
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-}), { timestamps: True };
+}, { timestamps: true });
 
 module.exports = mongoose.model('Item', itemSchema);
