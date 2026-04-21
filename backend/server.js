@@ -19,4 +19,4 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${27017}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -2,7 +2,7 @@ const Item = require('../models/Item');
 
 exports.createItem = async (req, res, next) => {
   try {
-    const item = await Item.create({ ...req.body, userId: req.user.id });
+    const item = await Item.create({ ...req.body, userID: req.user.id });
     res.status(201).json({ message: 'Item created successfully', item });
   } catch (err) {
     next(err);
@@ -15,8 +15,10 @@ exports.getItems = async (req, res, next) => {
     if (req.query.type)   filter.type   = req.query.type;
     if (req.query.status) filter.status = req.query.status;
 
-    const items = await Item.find(filter).populate('userId', 'name email');
-    res.json(items);
+    const items = await Item.find(filter).populate('userID', 'name email');
+    res.json({
+      "count": items.length,
+      "data": [...items]});
   } catch (err) {
     next(err);
   }
@@ -24,7 +26,7 @@ exports.getItems = async (req, res, next) => {
 
 exports.getItemById = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id).populate('userId', 'name email');
+    const item = await Item.findById(req.params.id).populate('userID', 'name email');
     if (!item) return res.status(404).json({ status: 'error', message: 'Item not found.' });
     res.json(item);
   } catch (err) {

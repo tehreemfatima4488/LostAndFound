@@ -29,7 +29,7 @@ const authorize = async (req, res, next) => {
     if (!item) {
       return res.status(404).json({ status: 'error', message: 'Item not found.' });
     }
-    if (item.userId.toString() !== req.user.id) {
+    if (item.userID.toString() !== req.user.id) {
       return res.status(403).json({ status: 'error', message: 'Forbidden. You do not own this item.' });
     }
     req.item = item;
@@ -41,6 +41,7 @@ const authorize = async (req, res, next) => {
 
 // ── 3. Validate register body ────────────────────────────────────────
 const validateRegister = (req, res, next) => {
+  console.log('Validating registration data:', req.body);
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(400).json({ status: 'error', message: 'Name, email and password are required.' });
@@ -105,10 +106,13 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  console.log('File received:', { filename: file.originalname, mimetype: file.mimetype, fieldname: file.fieldname });
   const allowed = /jpeg|jpg|png|webp/;
   if (allowed.test(path.extname(file.originalname).toLowerCase()) && allowed.test(file.mimetype)) {
+    console.log('File accepted');
     return cb(null, true);
   }
+  console.log('File rejected - invalid type');
   cb(new Error('Only image files (jpeg, jpg, png, webp) are allowed.'));
 };
 

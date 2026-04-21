@@ -16,4 +16,11 @@ const itemSchema = new mongoose.Schema({
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, { timestamps: true });
 
+// When status is recovered, automatically set type to found
+itemSchema.pre('save', function() {
+  if (this.status === 'recovered') {
+    this.type = 'found';
+  }
+});
+
 module.exports = mongoose.model('Item', itemSchema);
