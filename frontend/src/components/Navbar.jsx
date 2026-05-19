@@ -24,6 +24,13 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="flex items-center gap-4 md:gap-6">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-blue-600 font-semibold transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-blue-50"
+              title="Home"
+            >
+              🏠 <span className="hidden sm:inline">Home</span>
+            </Link>
             {isAuthenticated ? (
               <>
                 <Link

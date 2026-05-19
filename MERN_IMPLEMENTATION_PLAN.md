@@ -255,7 +255,6 @@ src/
 - [ ] Only owner can edit/delete own items
 - [ ] User profile shows correct statistics
 - [ ] Error messages display for invalid inputs
-
 - [ ] Success notifications appear after actions
 - [ ] Image upload handles multiple formats (jpg, png, etc.)
 
