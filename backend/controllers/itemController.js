@@ -9,6 +9,21 @@ exports.createItem = async (req, res, next) => {
   }
 };
 
+exports.getCategories = async (req, res, next) => {
+  try {
+    const defaultCategories = ['Electronics', 'Clothing', 'Documents', 'Keys', 'Accessories', 'Other'];
+    const dbCategories = await Item.distinct('category');
+    
+    // Merge standard categories and any database categories, filtering empty strings
+    const allCategories = Array.from(new Set([...defaultCategories, ...dbCategories]))
+      .filter(cat => cat && cat.trim() !== '');
+      
+    res.json(allCategories);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getItems = async (req, res, next) => {
   try {
     const filter = {};

@@ -3,6 +3,7 @@ const ctrl   = require('../controllers/itemController');
 const { protect, authorize, validateItem, locationValidate } = require('../middleware/authMiddleware');
 
 router.get('/',            ctrl.getItems);
+router.get('/categories',  ctrl.getCategories);
 router.get('/:id',         ctrl.getItemById);
 router.post('/',           protect, validateItem, locationValidate, ctrl.createItem);
 router.put('/:id',         protect, authorize, locationValidate, ctrl.updateItem);
