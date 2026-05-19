@@ -1,27 +1,39 @@
 const Item = require('../models/Item');
 
+// Available item categories
+const CATEGORIES = [
+  'Electronics',
+  'Clothing',
+  'Documents',
+  'Keys',
+  'Accessories',
+  'Books',
+  'Jewelry',
+  'Bags',
+  'Shoes',
+  'Other',
+];
+
 exports.createItem = async (req, res, next) => {
   try {
-    const item = await Item.create({ ...req.body, userID: req.user.id });
+    const itemData = { ...req.body, userID: req.user.id };
+    
+    // Handle file upload
+    if (req.file) {
+      itemData.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    }
+    
+    const item = await Item.create(itemData);
     res.status(201).json({ message: 'Item created successfully', item });
   } catch (err) {
     next(err);
   }
 };
 
-exports.getCategories = async (req, res, next) => {
-  try {
-    const defaultCategories = ['Electronics', 'Clothing', 'Documents', 'Keys', 'Accessories', 'Other'];
-    const dbCategories = await Item.distinct('category');
-    
-    // Merge standard categories and any database categories, filtering empty strings
-    const allCategories = Array.from(new Set([...defaultCategories, ...dbCategories]))
-      .filter(cat => cat && cat.trim() !== '');
-      
-    res.json(allCategories);
-  } catch (err) {
-    next(err);
-  }
+exports.getCategories = (req, res) => {
+  console.log('GET /categories endpoint called');
+  console.log('Sending categories:', CATEGORIES);
+  res.json(CATEGORIES);
 };
 
 exports.getItems = async (req, res, next) => {
@@ -51,9 +63,16 @@ exports.getItemById = async (req, res, next) => {
 
 exports.updateItem = async (req, res, next) => {
   try {
-    Object.assign(req.item, req.body);
+    const updateData = { ...req.body };
+    
+    // Handle file upload
+    if (req.file) {
+      updateData.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    }
+    
+    Object.assign(req.item, updateData);
     await req.item.save();
-    res.json({ message: 'Item updated successfully' });
+    res.json({ message: 'Item updated successfully', item: req.item });
   } catch (err) {
     next(err);
   }
