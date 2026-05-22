@@ -49,11 +49,10 @@ const CategoryInput = ({ value, onChange, categories = [], loading }) => {
             onChange('category', '');
             setSearchTerm('');
           }}
-          className={`px-3 py-1 text-sm rounded-lg font-medium transition-colors ${
-            !customInputMode
+          className={`px-3 py-1 text-sm rounded-lg font-medium transition-colors ${!customInputMode
               ? 'bg-blue-600 text-white'
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
+            }`}
         >
           From List
         </button>
@@ -64,11 +63,10 @@ const CategoryInput = ({ value, onChange, categories = [], loading }) => {
             onChange('category', '');
             setSearchTerm('');
           }}
-          className={`px-3 py-1 text-sm rounded-lg font-medium transition-colors ${
-            customInputMode
+          className={`px-3 py-1 text-sm rounded-lg font-medium transition-colors ${customInputMode
               ? 'bg-blue-600 text-white'
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
+            }`}
         >
           Custom
         </button>
@@ -104,9 +102,8 @@ const CategoryInput = ({ value, onChange, categories = [], loading }) => {
                     key={cat}
                     type="button"
                     onClick={() => handleSelectCategory(cat)}
-                    className={`w-full text-left px-4 py-2 hover:bg-blue-50 transition-colors ${
-                      value === cat ? 'bg-blue-100 font-semibold' : ''
-                    }`}
+                    className={`w-full text-left px-4 py-2 hover:bg-blue-50 transition-colors ${value === cat ? 'bg-blue-100 font-semibold' : ''
+                      }`}
                   >
                     {cat}
                   </button>
